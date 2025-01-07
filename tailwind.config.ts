@@ -1,6 +1,8 @@
+import fireCMSConfig from "@firecms/ui/tailwind.config.js";
 import type { Config } from "tailwindcss";
 
 export default {
+  presets: [fireCMSConfig],
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
