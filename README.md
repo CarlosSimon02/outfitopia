@@ -1,4 +1,13 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## FireCMS PRO starter template
+
+Welcome to FireCMS!
+
+This is a Next.js project bootstrapped with [create-firecms-app](https://firecms.co).
+It includes a FireCMS instance connected to Firestore and a simple example of a blog and products collection.
+
+In order to run this project, you will need to create a Firebase project,
+create a web app and copy the configuration to the `firebase_config.ts`.
+(but it is likely it was configured for you already).
 
 ## Getting Started
 
@@ -14,23 +23,56 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+You can access the apps in:
+- Website: http://localhost:3000
+- FireCMS: http://localhost:3000/cms
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can find the code under the `src/app` folder.
+There are some common components under `src/common`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+## Firestore rules
 
-To learn more about Next.js, take a look at the following resources:
+This project reads and writes data to Firestore. 
+By default the paths `products` and `blog` are used as an example.
+If you don't set up the Firestore rules, you will get the error when you try to read or write data:
+`Missing or insufficient permissions.`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The FireCMS PRO plugins store some configuration in `__FIRECMS`. FireCMS users and
+roles are stored under this path. You probably want to grant access initially 
+to your user to this path:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+match /__FIRECMS/{document=**} {
+    allow read: if true;
+    allow write: if true;
+}
+```
 
-## Deploy on Vercel
+After that, you can restrict your rules so only registered users can access:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+match /{document=**} {
+    allow read: if isFireCMSUser();
+    allow write: if isFireCMSUser();
+}
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+function isFireCMSUser(){
+    return exists(/databases/$(database)/documents/__FIRECMS/config/users/$(request.auth.token.email));
+}
+```
+
+## Frontend website
+
+The website is a Next.js app. You can find the code under the `src/app` folder.
+It includes CRUD views for the `products` and `blog` collections.
+The products view includes automatic pagination and filtering.
+
+
+## License 
+
+In order to use the FireCMS PRO features you need to have a valid license key. 
+The PRO features are implemented as plugins.
+You can get one at [firecms.co](https://app.firecms.co/subscriptions).
+When you get your API key, you can set it in the `.env` file.
+
