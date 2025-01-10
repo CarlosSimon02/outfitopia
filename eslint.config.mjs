@@ -15,10 +15,13 @@ const eslintConfig = [
     "plugin:@typescript-eslint/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:import/recommended",
-    "prettier"
+    "prettier",
   ),
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+    },
   },
 ];
 
