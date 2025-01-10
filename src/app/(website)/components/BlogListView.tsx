@@ -1,7 +1,7 @@
 "use client";
 
 import { CircularProgress } from "@firecms/ui";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import BlogEntryPreviewCard from "@/app/common/components/BlogEntryPreviewCard";
 import { getBlogEntries } from "@/app/common/database";
@@ -19,22 +19,22 @@ export function BlogListView({
   );
   const [loading, setLoading] = useState(false);
 
+  const loadBlogEntries = useCallback(async function loadProducts() {
+    const newLimit = blogEntries.length + 10;
+    if (newLimit === limit.current || noMoreToLoad.current) {
+      return;
+    }
+    limit.current = newLimit;
+    setLoading(true);
+    const newBlogEntries = await getBlogEntries({
+      limit: newLimit,
+    }).finally(() => setLoading(false));
+
+    noMoreToLoad.current = newBlogEntries.length !== newLimit;
+    setBlogEntries(newBlogEntries);
+  }, []);
+
   useEffect(() => {
-    const loadBlogEntries = async function loadProducts() {
-      const newLimit = blogEntries.length + 10;
-      if (newLimit === limit.current || noMoreToLoad.current) {
-        return;
-      }
-      limit.current = newLimit;
-      setLoading(true);
-      const newBlogEntries = await getBlogEntries({
-        limit: newLimit,
-      }).finally(() => setLoading(false));
-
-      noMoreToLoad.current = newBlogEntries.length !== newLimit;
-      setBlogEntries(newBlogEntries);
-    };
-
     const handleScroll = async () => {
       if (
         window.innerHeight + document.documentElement.scrollTop + 500 >=
