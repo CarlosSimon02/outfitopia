@@ -27,6 +27,7 @@
     "@fontsource/jetbrains-mono": "^5.1.1",
     "@fontsource/playfair-display": "^5.1.0",
     "@fontsource/poppins": "^5.1.0",
+    "@t3-oss/env-nextjs": "^0.11.1",
     "@tailwindcss/typography": "^0.5.15",
     "firebase": "^10.14.1",
     "next": "15.1.4",
@@ -35,7 +36,8 @@
     "react-dom": "^18.3.1",
     "react-router": "^6.28.0",
     "react-router-dom": "^6.28.0",
-    "typeface-rubik": "^1.1.13"
+    "typeface-rubik": "^1.1.13",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
@@ -46,6 +48,7 @@
     "@typescript-eslint/parser": "^8.19.1",
     "eslint": "^9.16.0",
     "eslint-config-next": "15.0.3",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "husky": "^9.1.7",
     "lint-staged": "^15.3.0",
@@ -53,7 +56,6 @@
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.9",
     "tailwindcss": "^3.4.15",
-    "typescript": "^5.7.2",
-    "eslint-config-prettier": "^9.1.0"
+    "typescript": "^5.7.2"
   }
 }

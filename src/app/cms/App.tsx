@@ -1,6 +1,5 @@
 "use client";
 
-import { firebaseConfig } from "../common/firebase_config";
 import {
   AppBar,
   CircularProgressCenter,
@@ -45,6 +44,7 @@ import { productsCollection } from "./collections/products";
 import { blogCollection } from "@/app/cms/collections/blog";
 import "@/app/common/index.css";
 import logo from "@/app/common/logo.svg";
+import { firebaseConfig } from "@/infrastracture/firebase/client/firebaseConfig";
 
 export function App() {
   const title = "FireCMS e-commerce and blog demo";
