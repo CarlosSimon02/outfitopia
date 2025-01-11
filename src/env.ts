@@ -11,6 +11,9 @@ export const env = createEnv({
     NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: z.string().min(1),
     NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: z.string().min(1),
   },
+  server: {
+    NODE_ENV: z.enum(["development", "production", "test"]),
+  },
   experimental__runtimeEnv: {
     NEXT_PUBLIC_FIREBASE_API_KEY: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
     NEXT_PUBLIC_FIREBASE_PROJECT_ID:
